@@ -1,4 +1,4 @@
-# Crypto Tracker Client Side
+# Loan management Application Side
 
 Uses Angular CLI version 6.1.3.
 

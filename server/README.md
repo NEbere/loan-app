@@ -1,6 +1,5 @@
-### Crypto Tracker Application Backend
+# Loan management Application Backend
 
-The Backend for the crypto tracker application.
 Node version >= 8xx
 
 To start server, Ensure Postgres is up and running

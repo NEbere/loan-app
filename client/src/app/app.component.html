@@ -1,0 +1,232 @@
+<div class="container-fluid mainContent">
+  <div class="row">
+    <div class="col-md-2 side-bar-col">
+      <div class="sideBar">
+        <div class="menuItems">
+          <div class="logo">
+            <p class="logo-text">
+              <img src="https://dummyimage.com/40x40/000/fff.png" class="img-fluid" alt=""> <span>Logo</span>
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link menu-text active" href="#">
+                <span>
+                  <fa-icon [icon]="faBars"></fa-icon>
+                </span> Main list
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link menu-text" href="#">
+                <span>
+                  <fa-icon [icon]="faInfoCircle"></fa-icon>
+                </span> Loan details
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link menu-text" href="#">
+                <span>
+                  <fa-icon [icon]="faCalendar"></fa-icon>
+                </span> Contacts
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link menu-text" href="#">
+                <span>
+                  <fa-icon [icon]="faLandmark"></fa-icon>
+                </span> Bank names
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link menu-text" href="#">
+                <span>
+                  <fa-icon [icon]="faPaperclip"></fa-icon>
+                </span> Attachments
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link menu-text" href="#">
+                <span>
+                  <fa-icon [icon]="faArchive"></fa-icon>
+                </span> Archived loans
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link menu-text" href="#">
+                <span>
+                  <fa-icon [icon]="faTrash"></fa-icon>
+                </span> Deleted loans
+              </a>
+            </li>
+            <li class="nav-item">
+              <button type="button" class="btn btn-primary add-new-loan" (click)="open(content)">Add new loan</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10 main-content">
+      <!-- Nav -->
+      <nav class="navbar navbar-expand-lg navbar-light search-nav">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <form class="form-inline my-2 my-lg-0 search-form">
+            <input class="form-control mr-sm-2 capsule" type="search" placeholder="&#xf002;" aria-label="Search">
+            <a href="" class="grey-text">Filter Search</a>
+          </form>
+        </div>
+
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              {{username}}
+              <img src="https://dummyimage.com/40x40/000/fff.png" class="img-fluid" alt="">
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <!-- End of nav -->
+      <div class="container" *ngIf="loading">
+          <div class="row">
+              <div class="col-md-9 table-container">
+                  <h3>Loading Loan Data ...</h3>
+              </div>
+          </div>
+      </div>
+      <div class="container" *ngIf="loanEntries">
+        <div class="row">
+          <div class="col-md-9 table-container">
+            <table class="table table-responsive table-borderless table-striped">
+                <br>
+                <h5>Loan Details</h5>
+              <thead>
+                <tr>
+                  <th scope="col">Bank Name</th>
+                  <th scope="col">Loan Number</th>
+                  <th scope="col">Loan Amount {{ currencySymbol }}</th>
+                  <th scope="col">Loan Balance {{ currencySymbol }}</th>
+                  <th scope="col">Partial Payments Made {{ currencySymbol }}</th>
+                  <th scope="col">Opening Date</th>
+                  <th scope="col">Due Date</th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let loan of loanEntries" class="loanData">
+                  <th scope="row">{{ loan.bankName }}</th>
+                  <th scope="row">{{ loan.loanNumber }}</th>
+                  <th scope="row">{{ loan.amount | currency:[] }}</th>
+                  <th scope="row">{{ loan.balance | currency:[] }}</th>
+                  <th scope="row">{{ loan.partialPayments | currency:[] }}</th>
+                  <th scope="row">{{ loan.openingDate | date }}</th>
+                  <th scope="row">{{ loan.dueDate | date }}</th>
+                  <th scope="row">{{ loan.details }}</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-3 notes-container">
+            <div class="notes">
+                <br>
+                <h5>Timeline</h5>
+                <hr>
+                <div class="note" *ngFor="let note of notes">
+                  <br>
+                  <p class="noteTitle">{{note.title}}</p>
+                  <p class="noteContent">{{note.note | slice:0:47}}...</p>
+                  <p class="noteDetails">
+                    <span class="float-left">{{note.amount}}</span>
+                    <span class="float-right">{{note.date | date}}</span>
+                  </p>
+                  <div class="clearfix"></div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- <form>
+        <div class="form-group">
+          <label for="dateOfBirth">Date of birth</label>
+          <div class="input-group">
+            <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </form> -->
+
+      <form>
+        <div class="form-group">
+
+            <!-- balance: 22979554.86
+            createdAt: "2018-11-17T00:00:00.000Z"
+            details: "Descuento Fact #492"
+            dueDate: "2018-12-11T00:00:00.000Z"
+            id: 7
+            loanNumber: "60007651"
+            openingDate: "2018-06-15T00:00:00.000Z"
+            project: "RECOPE"
+            updatedAt: "2018-11-17T00:00:00.000Z" -->
+
+
+          <label for="bankName">Bank name:</label>
+          <input type="text" [(ngModel)]="loan.bankName" class="form-control" id="bankName" name="bankName" aria-describedby="bankName" placeholder="Bank name">
+          
+          <label for="loanNumber">Loan number:</label>
+          <input type="text" [(ngModel)]="loan.loanNumber" class="form-control" id="loanNumber" name="loanNumber" aria-describedby="loanNumber" placeholder="Loan number">
+
+          <label for="loanAmount">Loan amount:</label>
+          <input type="text" [(ngModel)]="loan.amount" name="amount" class="form-control" id="loanAmount" aria-describedby="loanAmount" placeholder="Loan amount">
+          
+          <label for="loanNumber">Partial Payment:</label>
+          <input type="text" [(ngModel)]="loan.partialPayments" name="partialPayments" class="form-control" id="partialPayment" aria-describedby="partialPayment" placeholder="Partial payment">
+          
+          <label for="openingDate">Opening date:</label>
+          <input type="date" [(ngModel)]="loan.openingDate" name="openingDate" class="form-control" id="openingDate" aria-describedby="openingDate" placeholder="Opening Date">
+          
+          <label for="dueDate">Due date:</label>
+          <input type="date" [(ngModel)]="loan.dueDate" name="dueDate" class="form-control" id="dueDate" aria-describedby="dueDate" placeholder="Due date">
+          
+          <label for="loanDetails">Loan details:</label>
+          <input type="text" [(ngModel)]="loan.details" name="details" class="form-control" id="loanDetails" aria-describedby="loanDetails" placeholder="Loan details">
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="createLoanEntry(loan)">Submit</button>
+      </form>
+
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div> -->
+  </ng-template>
+  
+  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+  
+  <!-- <hr> -->
+  
+  <pre>{{closeResult}}</pre>

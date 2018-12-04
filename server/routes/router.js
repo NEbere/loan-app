@@ -1,6 +1,7 @@
 // Third party imports
 const router = require('express').Router()
 const lodash = require('lodash')
+const sequelize = require('sequelize')
 
 // Local imports
 const config = require('../utils/config.json')
@@ -11,13 +12,50 @@ const {
 // models
 const Loan = require('../models').loan
 const Note = require('../models').note
-const models = require('../models')
+const Op = sequelize.Op
 
 /**
  * Health check endpoint: Used to run a health check on ther server endpoints
  */
 router.get('/_health', (req, res) => {
   res.status(200).send({ message: 'ok' })
+})
+
+// GET loan by dueDate or bankName OR get all loans if no query param
+router.get('/loans', async (req, res) => {
+  const requestQuery = req.query
+  let loans
+
+  if (requestQuery.dueDate){
+    const dateParam = requestQuery.dueDate
+    loans = await Loan.findAll({
+      where: { dueDate: {
+        [Op.eq]:  new Date(dateParam)
+      } }
+    })
+  } else if (requestQuery.bankName){
+    const bankNameParam = requestQuery.bankName
+    loans = await Loan.findAll({
+      where: { bankName: {
+        [Op.iLike]:  `%${bankNameParam}%`
+      } }
+    })
+  } else {
+    loans = await Loan.findAll()
+  }
+
+  res.status(200).send({ loans })
+})
+
+// GET loan by ID
+router.get('/loan/:id', async (req, res) => {
+  const loanId = parseInt(req.params.id, 10)
+  const loan = await Loan.findById(loanId, {
+    include: [ 
+      { model: Note, as: 'notes' }
+    ]
+  })
+  res.status(200).send({ loan })
 })
 
 // POST loan
@@ -27,109 +65,33 @@ router.post('/loan', async (req, res) => {
   res.status(200).send({ response: response })
 })
 
-router.post('/loan/:id/note', async (req, res) => {
-  const loanId = parseInt(req.params.id, 10)
+// Add notes to a loan
+router.post('/loan/:loanId/note', async (req, res) => {
+  const loanId = parseInt(req.params.loanId, 10)
+  const loan = await Loan.findById(loanId)
   const note = req.body
-  note['createdAt'] = new Date()
-  // const response = await Note.create(note)
-  const loan = await Loan.findById(loanId)
-  const data = await loan.createNote(note)
-
-  // then((loan) => {
-  //   loan.createNote(note).then(success => {
-  //   })
-  //   console.log(new Note(note), 'new note')
-  //   // console.log(loan, loan.addNote, 'loan and addnote func')
-  // }).catch(error => {
-  //   console.log(error, 'error creating note')
-  // })
-
-
-  // .addNote(note)
-  // console.log(loan.createNote, 'loan.prototype')
-  // const response = await Loan.createNote(note)
-
-  console.log(Loan.prototype, 'note.prototype')
-  // console.log(Loan.prototype.createNote, 'loan.prototype.createNote')
-  // const notePrototype = await Note.prototype
-  res.status(200).send({ responseData: "test data", data })
-})
-
-// GET loans
-router.get('/loans', async (req, res) => {
-  const loans = await Loan.findAll({order: [['id', 'DESC']]})
-  res.status(200).send({ loans: loans })
+  const loanNote = await loan.createNote(note)
+  res.status(200).send({ responseData: "test data", loanNote })
 })
 
 
-// GET loan by ID
-// TODO get loan with notes
-router.get('/loans/:id', async (req, res) => {
+// Edit a loan
+router.put('/loan/:id', async (req, res) => {
   const loanId = parseInt(req.params.id, 10)
+  const requestBody = req.body
+
   const loan = await Loan.findById(loanId)
-  // console.log(Loan.prototype)
-  console.log(loan.getNotes())
-    // { include: { model: Note, as: 'note' } })
-
-  res.status(200).send({ loan: loan })
+  const response = await loan.update(requestBody)
+  res.status(200).send({ response })
 })
 
-/**
- * GET all product shared between the provided exchanges,['BNB', 'BTX', 'BFX']
- */
-router.get('/products', (req, res) => {
-  const promises = config.EXCHANGES.map((exchange) => {
-    const options = {
-      host: config.BASE_URL,
-      method: 'GET',
-      path: `/api/exchanges/${exchange}/products`,
-      headers: {
-        'Authorization': `Bearer ${config.MONEEDA_TOKEN}`
-      }
-    }
+// Delete a loan
+router.delete('/loan/:id', async (req, res) => {
+  const loanId = parseInt(req.params.id, 10)
 
-    return getHttpRequestPromise(options)
-  })
-
-  // Resolve all promises
-  Promise.all(promises)
-    .then(result => {
-      const productsIntersection = lodash.intersectionBy(...result, 'id')
-      res.send({ products: productsIntersection })
-    }).catch(error => {
-      res.send({ error: error })
-    })
-})
-
-/**
- * GET the prices for a product on all provided exchanges, ['BNB', 'BTX', 'BFX']
- */
-router.get('/products/:PRODUCT/prices', (req, res) => {
-  const product = req.params.PRODUCT
-  const promises = config.EXCHANGES.map((exchange) => {
-    const options = {
-      host: config.BASE_URL,
-      method: 'GET',
-      path: `/api/exchanges/${exchange}/ticker?product=${product}`,
-      headers: {
-        'Authorization': `Bearer ${config.MONEEDA_TOKEN}`
-      }
-    }
-
-    return getHttpRequestPromise(options)
-  })
-
-  Promise.all(promises)
-    .then(result => {
-      const response = []
-      config.EXCHANGES.forEach((exchange, i) => {
-        let product = { exchange: exchange, price: result[i] }
-        response.push(product)
-      })
-      res.send({ response: response })
-    }).catch(error => {
-      res.send({ error: error })
-    })
+  const loan = await Loan.findById(loanId)
+  const response = await loan.destroy()
+  res.status(200).send({ response: response })
 })
 
 module.exports = router

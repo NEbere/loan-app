@@ -17,17 +17,17 @@ module.exports = {
         type: Sequelize.STRING
       },
       loanNumber: {
-        type: Sequelize.BIGINT(100),
+        type: Sequelize.BIGINT,
         allowNull: false,
       },
       amount: {
-        type: Sequelize.FLOAT(100,2),
+        type: Sequelize.FLOAT,
       },
       balance: {
-        type: Sequelize.FLOAT(100,2),
+        type: Sequelize.FLOAT,
       },
       partialPayments: {
-        type: Sequelize.FLOAT(100,2),
+        type: Sequelize.FLOAT,
       },
       openingDate: {
         type: Sequelize.DATE,

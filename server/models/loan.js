@@ -4,16 +4,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         loanNumber: {
-            type: DataTypes.BIGINT(100)
+            type: DataTypes.BIGINT
         },
         amount: {
-            type: DataTypes.FLOAT(100,2)
+            type: DataTypes.FLOAT
         },
         balance: {
-            type: DataTypes.FLOAT(100,2)
+            type: DataTypes.FLOAT
         },
         partialPayments: {
-            type: DataTypes.FLOAT(100,2)
+            type: DataTypes.FLOAT
         },
         openingDate: {
             type: DataTypes.DATE
@@ -41,17 +41,14 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     loan.associate = (models) => {
-        loan.belongsToMany(
-          models.note,
-          {
-            through: {
-              model: models.loan_note,
-              unique: true
-            },
-            as: 'notes'
-          }
-        )
-      }
+        loan.belongsToMany(models.note, {
+            through: 'loanNotes',
+            foreignKey: 'loanId',
+            otherKey: 'noteId',
+            as: 'notes',
+          })
+    }
 
+    sequelize.sync()
     return loan
 }

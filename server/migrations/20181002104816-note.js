@@ -8,10 +8,10 @@ module.exports = {
     */
    return queryInterface.createTable('note', {
     id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: Sequelize.INTEGER
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
     },
     title: {
       type: Sequelize.STRING

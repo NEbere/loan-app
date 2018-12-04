@@ -19,18 +19,5 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'note'
     })
 
-    note.associate = (models) => {
-        note.belongsTo(
-          models.loan,
-          {
-            through: {
-              model: models.loan_note,
-              unique: true
-            },
-            as: 'loan'
-          }
-        )
-      }
-
     return note
 }

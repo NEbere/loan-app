@@ -13,10 +13,14 @@ import { AppRoutingModule } from './/app-routing.module';
 
 // services
 import { APIUtilService } from '../services/apiUtils';
+import { LoanDetailComponent } from './loan-detail/loan-detail.component';
+import { LoansComponent } from './loans/loans.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoanDetailComponent,
+    LoansComponent,
   ],
   imports: [
     NgbModule,

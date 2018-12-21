@@ -118,7 +118,13 @@ input.capsule {
 input.capsule::placeholder {
     color: #9a9db7;
 }
-
+/* loan detail */
+.loan-detail {
+    padding: 2em;
+}
+.delete-loan{
+    margin-left: 5px;
+}
 /* Notes container */
 .notes-container {
     margin-top: 2em;

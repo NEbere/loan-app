@@ -22,6 +22,9 @@ router.get('/_health', (req, res) => {
 })
 
 // GET loan by dueDate or bankName OR get all loans if no query param
+// GET /loans get all loans
+// GET /loans?bankName=Banco returns loans where bank name contains the string provided in query
+// GET /loans?dueDate=2019-02-25 returns loans by due date
 router.get('/loans', async (req, res) => {
   const requestQuery = req.query
   let loans
@@ -48,6 +51,7 @@ router.get('/loans', async (req, res) => {
 })
 
 // GET loan by ID
+// GET /loan/1 returns a loan and its notes
 router.get('/loan/:id', async (req, res) => {
   const loanId = parseInt(req.params.id, 10)
   const loan = await Loan.findById(loanId, {
@@ -59,6 +63,7 @@ router.get('/loan/:id', async (req, res) => {
 })
 
 // POST loan
+
 router.post('/loan', async (req, res) => {
   const requestBody = req.body
   const response = await Loan.create(requestBody)
@@ -93,5 +98,8 @@ router.delete('/loan/:id', async (req, res) => {
   const response = await loan.destroy()
   res.status(200).send({ response: response })
 })
+
+// Add more money to loan.
+// Route to update loan partial payment
 
 module.exports = router

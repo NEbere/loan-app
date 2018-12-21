@@ -2,11 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-// import { of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
-// import { User } from './user';
-// import { Inventory } from './inventory'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,6 +26,14 @@ export class APIUtilService {
       );
   }
 
+  getLoan(loanId: any): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/loan/${loanId}`)
+      .pipe(
+        tap(loan => console.log(loan, `fetched loan`)),
+        catchError(this.handleError('getLoan', []))
+      );
+  }
+
   createLoan(loanData): Observable<any> {
     let balance = loanData.amount - loanData.partialPayments
     loanData.balance = balance
@@ -38,6 +42,14 @@ export class APIUtilService {
       tap(loan => console.log(loan, `Loan created`)),
       catchError(this.handleError('getLoanEntries', []))
     )
+  }
+
+  deleteLoan(loanId: any): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/loan/${loanId}`)
+      .pipe(
+        tap(response => console.log(response, `deleted loan`)),
+        catchError(this.handleError('deleteLoan', []))
+      );
   }
 
   getProducts(): Observable<any> {

@@ -1,0 +1,64 @@
+<div class="container-fluid mainContent">
+  <div class="row">
+    <div class="col-md-10 main-content">
+      <div class="container" *ngIf="loading">
+          <div class="row">
+              <div class="col-md-9 table-container">
+                  <h3>Loading Loan Data ...</h3>
+              </div>
+          </div>
+      </div>
+      <div class="container" *ngIf="loanEntries">
+        <div class="row">
+          <div class="col-md-9 table-container">
+            <table class="table table-responsive table-borderless table-striped">
+                <br>
+                <h5>Loans</h5>
+              <thead>
+                <tr>
+                  <th scope="col">Bank Name</th>
+                  <th scope="col">Loan Number</th>
+                  <th scope="col">Loan Amount {{ currencySymbol }}</th>
+                  <th scope="col">Loan Balance {{ currencySymbol }}</th>
+                  <th scope="col">Partial Payments Made {{ currencySymbol }}</th>
+                  <th scope="col">Opening Date</th>
+                  <th scope="col">Due Date</th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let loan of loanEntries" class="loanData" (click)="gotoLoanDetail(loan)">
+                  <th scope="row">{{ loan.bankName }}</th>
+                  <th scope="row">{{ loan.loanNumber }}</th>
+                  <th scope="row">{{ loan.amount | currency:[] }}</th>
+                  <th scope="row">{{ loan.balance | currency:[] }}</th>
+                  <th scope="row">{{ loan.partialPayments | currency:[] }}</th>
+                  <th scope="row">{{ loan.openingDate | date }}</th>
+                  <th scope="row">{{ loan.dueDate | date }}</th>
+                  <th scope="row">{{ loan.details }}</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-3 notes-container">
+            <div class="notes">
+                <br>
+                <h5>Timeline</h5>
+                <hr>
+                <div class="note" *ngFor="let note of notes">
+                  <br>
+                  <p class="noteTitle">{{note.title}}</p>
+                  <p class="noteContent">{{note.note | slice:0:47}}...</p>
+                  <p class="noteDetails">
+                    <span class="float-left">{{note.amount}}</span>
+                    <span class="float-right">{{note.date | date}}</span>
+                  </p>
+                  <div class="clearfix"></div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

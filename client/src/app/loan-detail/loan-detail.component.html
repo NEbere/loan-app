@@ -1,0 +1,41 @@
+<div class="container-fluid mainContent">
+  <div class="row">
+    <div class="col-md-10 main-content container">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 table-container table loan-detail">
+            <p class="noteDetails">
+              <span class="float-left"><h5>Loan Detail</h5></span>
+              <span class="float-right">
+                  <a class="btn btn-primary add-new-loan" routerLink="">Go to Home page</a>
+                <button class="btn btn-danger delete-loan" (click)="deleteLoan(loan)">Delete loan</button>
+              </span>
+            </p>
+            <div class="clearfix"></div>
+            <p><b>Bank name:</b>  {{loan.bankName}}</p>
+            <p><b>Loan number:</b>  {{loan.loanNumber}}</p>
+            <p><b>Amount:</b>  {{ currencySymbol }} {{loan.amount | currency:[]}}</p>
+            <p><b>Balance:</b>  {{ currencySymbol }} {{loan.balance | currency:[]}}</p>
+            <p><b>Partial Payments:</b>  {{ currencySymbol }} {{loan.partialPayments | currency:[]}}</p>
+            <p><b>Opening date:</b>  {{loan.openingDate | date}}</p>
+            <p><b>Due date:</b>  {{loan.dueDate | date}}</p>
+            <p><b>project details:</b></p>
+            <p>
+                {{loan.project || 'Not available'}}
+            </p>
+            
+            <h5><b>Notes:</b></h5>
+            <div class="note" *ngFor="let note of loan.notes">
+              <br>
+              <p class="noteTitle">{{note.title}}</p>
+              <p class="noteContent">{{note.note}}</p>
+              <p class="noteContent">{{note.createdAt | date}}</p>
+            </div>
+            <button class="btn btn-primary delete-loan" (click)="addLoanNote(loan)">Add note</button>
+        </div>
+        <div class="col-md-1"></div>
+        
+    </div>
+    </div>
+  </div>
+</div>

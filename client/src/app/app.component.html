@@ -77,7 +77,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <form class="form-inline my-2 my-lg-0 search-form">
             <input class="form-control mr-sm-2 capsule" type="search" placeholder="&#xf002;" aria-label="Search">
-            <a href="" class="grey-text">Filter Search</a>
+            <a href="" class="grey-text">Filter Search  <fa-icon [icon]="faSlidersH"></fa-icon></a>
           </form>
         </div>
 
@@ -106,38 +106,14 @@
 
 <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <h4 class="modal-title" id="create-loan-modal">Create Loan</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <!-- <form>
-        <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
-          <div class="input-group">
-            <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-            </div>
-          </div>
-        </div>
-      </form> -->
-
       <form>
         <div class="form-group">
-
-            <!-- balance: 22979554.86
-            createdAt: "2018-11-17T00:00:00.000Z"
-            details: "Descuento Fact #492"
-            dueDate: "2018-12-11T00:00:00.000Z"
-            id: 7
-            loanNumber: "60007651"
-            openingDate: "2018-06-15T00:00:00.000Z"
-            project: "RECOPE"
-            updatedAt: "2018-11-17T00:00:00.000Z" -->
-
-
           <label for="bankName">Bank name:</label>
           <input type="text" [(ngModel)]="loan.bankName" class="form-control" id="bankName" name="bankName" aria-describedby="bankName" placeholder="Bank name">
           
@@ -163,34 +139,7 @@
       </form>
 
     </div>
-    <!-- <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div> -->
-  </ng-template>
-  
-  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
-  
-  <!-- <hr> -->
-  
+  </ng-template>  
   <pre>{{closeResult}}</pre>
 
-
   <router-outlet></router-outlet>
-
-
-
-<!-- <div class="container">
-  <h1>{{title}}</h1>
-  <ul class="nav" *ngIf="!loggedIn">
-    <li class="nav-item btn btn-outline-primary">
-      <a routerLink="/loans" class="nav-link active">All Loans</a>
-    </li>
-    <li class="nav-item btn btn-outline-primary">
-      <a routerLink="/loan" class="nav-link active">Loan</a>
-    </li>
-  </ul>
-  <br>
-</div>
-<br>
-
-<router-outlet></router-outlet> -->

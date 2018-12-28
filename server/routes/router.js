@@ -63,7 +63,7 @@ router.get('/loan/:id', async (req, res) => {
 })
 
 // POST loan
-
+// /loan with body of loan data. eg.:{ "bankName": "test2", "loanNumber": 1235, "amount": 5000, "balance": 1000, "partialPayments": 4000, "openingDate": "2018-10-02T00:00:00.000Z", "dueDate": "2018-10-20T00:00:00.000Z", "project": "test project 11", "details": "details of test loan 11" }
 router.post('/loan', async (req, res) => {
   const requestBody = req.body
   const response = await Loan.create(requestBody)
@@ -71,6 +71,7 @@ router.post('/loan', async (req, res) => {
 })
 
 // Add notes to a loan
+// /loan/2/note with body of note. eg.:{ "title": "test loan note - 5", "note": "test note 2 for loan 1" }
 router.post('/loan/:loanId/note', async (req, res) => {
   const loanId = parseInt(req.params.loanId, 10)
   const loan = await Loan.findById(loanId)
@@ -81,16 +82,21 @@ router.post('/loan/:loanId/note', async (req, res) => {
 
 
 // Edit a loan
+// /loan/2 with body of loan to change
 router.put('/loan/:id', async (req, res) => {
   const loanId = parseInt(req.params.id, 10)
   const requestBody = req.body
 
   const loan = await Loan.findById(loanId)
+  if (loan == null) {
+    res.status(404).send({ Error: "Loan with provided ID does not exist" })
+  }
   const response = await loan.update(requestBody)
   res.status(200).send({ response })
 })
 
 // Delete a loan
+// /loan/2 deletes the loan with the provided ID and returns an empty body
 router.delete('/loan/:id', async (req, res) => {
   const loanId = parseInt(req.params.id, 10)
 
@@ -98,8 +104,5 @@ router.delete('/loan/:id', async (req, res) => {
   const response = await loan.destroy()
   res.status(200).send({ response: response })
 })
-
-// Add more money to loan.
-// Route to update loan partial payment
 
 module.exports = router

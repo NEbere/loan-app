@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 // local iimports
 import { APIUtilService } from '../../services/apiUtils';
@@ -15,6 +16,7 @@ export class LoanDetailComponent implements OnInit {
   currencySymbol = '€'
   loanEntries = []
   loan:any = {}
+  note:any = {}
 
   public loading: boolean
   public loadingPrices: boolean
@@ -23,7 +25,8 @@ export class LoanDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: APIUtilService
+    private apiService: APIUtilService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -49,8 +52,47 @@ export class LoanDetailComponent implements OnInit {
     })
   }
 
-  addLoanNote(loan: any): void {
-    console.log(loan, "add loan note")
+    // Modal code
+    openEditModal(Editcontent) {
+      this.modalService.open(Editcontent, {ariaLabelledBy: 'edit-loan-modal'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+
+    open(content) {
+      this.modalService.open(content, {ariaLabelledBy: 'create-note-modal'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+  
+    private getDismissReason(reason: any): string {
+      if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+      } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+      } else {
+        return  `with: ${reason}`;
+      }
+    }
+
+  addLoanNote(loanId: any, note: any): void {
+    const loanData = {loanId, note}
+    this.apiService.addLoanNote(loanData)
+    .subscribe(() => {
+      window.location.reload();
+    })
+  }
+
+  editLoan(loan: any) : void {
+    this.apiService.editLoan(loan)
+    .subscribe(data => {
+      console.log(data, "Loan edited")
+      window.location.reload();
+    })
   }
 
 }

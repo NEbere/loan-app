@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
-import { notes } from './json_data/notes';
 import { faSearch, faBars, faInfoCircle, faCalendarAlt,
-  faLandmark, faPaperclip, faArchive, faTrash } from '@fortawesome/free-solid-svg-icons';
+  faLandmark, faPaperclip, faArchive, faTrash, faStream } from '@fortawesome/free-solid-svg-icons';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,7 +15,6 @@ import { APIUtilService } from '../services/apiUtils';
 })
 
 export class AppComponent implements OnInit {
-  notes: any[]
   currencySymbol = '€'
   faSearch = faSearch
   faBars = faBars
@@ -27,8 +25,10 @@ export class AppComponent implements OnInit {
   faPaperclip = faPaperclip
   faArchive = faArchive
   faTrash = faTrash
+  faSlidersH = faStream
   loanEntries = []
   loan:any = {}
+  calendarModel: any
 
   public loading: boolean
   public loadingPrices: boolean
@@ -42,14 +42,12 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.notes = notes
-    console.log(this.notes, 'this.notes')
     this.getLoanEntries()
   }
 
   // Modal code
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {ariaLabelledBy: 'create-loan-modal'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

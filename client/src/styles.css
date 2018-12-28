@@ -118,6 +118,33 @@ input.capsule {
 input.capsule::placeholder {
     color: #9a9db7;
 }
+
+/* filter dropdown */
+.dropdownContent {
+    width: 22em;
+    padding: 1em;
+}
+.dropdownContent button, .timeFilter button,
+.dropdown button, .bankNameFilter button {
+    background: transparent;
+    color: #a4a7bf;
+    border-color: #a4a7bf;
+    border-radius: 1em;
+    margin-right: 1em;
+    font-size: .8em;
+    padding: 0.2rem 0.95rem;
+}
+.timeFilter .calendarInput{
+    background: transparent;
+    color: #a4a7bf;
+    border-color: #a4a7bf;
+    font-size: .8em;
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+    height: initial;
+    padding: 0rem;
+    padding: 0.2rem 0.95rem;
+}
 /* loan detail */
 .loan-detail {
     padding: 2em;

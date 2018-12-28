@@ -8,6 +8,7 @@
               <span class="float-left"><h5>Loan Detail</h5></span>
               <span class="float-right">
                   <a class="btn btn-primary add-new-loan" routerLink="">Go to Home page</a>
+                  <button class="btn btn-success delete-loan" (click)="openEditModal(Editcontent)">Edit loan</button>
                 <button class="btn btn-danger delete-loan" (click)="deleteLoan(loan)">Delete loan</button>
               </span>
             </p>
@@ -31,7 +32,7 @@
               <p class="noteContent">{{note.note}}</p>
               <p class="noteContent">{{note.createdAt | date}}</p>
             </div>
-            <button class="btn btn-primary delete-loan" (click)="addLoanNote(loan)">Add note</button>
+            <button class="btn btn-primary delete-loan"  (click)="open(content)">Add note</button>
         </div>
         <div class="col-md-1"></div>
         
@@ -39,3 +40,73 @@
     </div>
   </div>
 </div>
+
+<!-- Add note popup -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="create-note-modal">Add loan note</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="noteTitle">Title:</label>
+          <input type="text" [(ngModel)]="note.title" class="form-control" id="noteTitle" name="noteTitle" aria-describedby="noteTitle" placeholder="Note title">
+          
+          <label for="noteContent">Note:</label>
+          <textarea class="form-control" 
+          id="noteContent" name="noteContent" aria-describedby="noteContent"
+          rows="3" [(ngModel)]="note.note" placeholder="Note content"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" (click)="addLoanNote(loan.id, note)">Add note</button>
+      </form>
+
+    </div>
+  </ng-template>
+  <pre>{{closeResult}}</pre>
+
+  <!-- Edit loan modal -->
+  <ng-template #Editcontent let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="edit-loan-modal">Edit loan</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="bankName">Bank name:</label>
+                <input type="text" [(ngModel)]="loan.bankName" class="form-control" id="bankName" name="bankName" aria-describedby="bankName" placeholder="Bank name">
+                
+                <label for="loanNumber">Loan number:</label>
+                <input type="text" [(ngModel)]="loan.loanNumber" class="form-control" id="loanNumber" name="loanNumber" aria-describedby="loanNumber" placeholder="Loan number">
+      
+                <label for="loanAmount">Loan amount:</label>
+                <input type="text" [(ngModel)]="loan.amount" name="amount" class="form-control" id="loanAmount" aria-describedby="loanAmount" placeholder="Loan amount">
+                
+                <label for="partialPayments">Partial Payment:</label>
+                <input type="text" [(ngModel)]="loan.partialPayments" name="partialPayments" class="form-control" id="partialPayment" aria-describedby="partialPayment" placeholder="Partial payment">
+                
+                <label for="balance">Balance:</label>
+                <input type="text" [(ngModel)]="loan.balance" name="balance" class="form-control" id="balance" aria-describedby="balance" placeholder="Balance" readonly>
+                
+                <label for="openingDate">Opening date:</label>
+                <input type="date" [(ngModel)]="loan.openingDate" name="openingDate" class="form-control" id="openingDate" aria-describedby="openingDate" placeholder="Opening Date">
+                
+                <label for="dueDate">Due date:</label>
+                <input type="date" [(ngModel)]="loan.dueDate" name="dueDate" class="form-control" id="dueDate" aria-describedby="dueDate" placeholder="Due date">
+                
+                <label for="loanDetails">Loan details:</label>
+                <input type="text" [(ngModel)]="loan.details" name="details" class="form-control" id="loanDetails" aria-describedby="loanDetails" placeholder="Loan details">
+              </div>
+  
+          <button type="submit" class="btn btn-primary" (click)="editLoan(loan)">Update</button>
+        </form>
+  
+      </div>
+    </ng-template>
+    <pre>{{closeResult}}</pre>

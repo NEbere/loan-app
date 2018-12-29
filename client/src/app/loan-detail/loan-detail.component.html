@@ -36,15 +36,13 @@
                   <br>
                   <h5>Loan Timeline</h5>
                   <hr>
-                  <div class="note" *ngFor="let note of loan.notes">
+                  <div class="note" *ngFor="let note of notes">
                     <br>
                     <p class="noteTitle">{{note.title}}</p>
                     <p class="noteContent">{{note.note | slice:0:47}}...</p>
                     <p class="noteDetails">
-                      <span class="float-left">{{note.amount}}</span>
-                      <span class="float-right">{{note.date | date}}</span>
+                      <span>{{note.createdAt | date}}</span>
                     </p>
-                    <div class="clearfix"></div>
                   </div>
               </div>
             </div>

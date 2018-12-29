@@ -14,9 +14,10 @@ import { APIUtilService } from '../../services/apiUtils';
 })
 export class LoanDetailComponent implements OnInit {
   faThList = faThList
-  currencySymbol = '€'
+  currencySymbol = '₡'
   loanEntries = []
   loan:any = {}
+  notes: any = []
   note:any = {}
 
   public loading: boolean
@@ -40,6 +41,8 @@ export class LoanDetailComponent implements OnInit {
     this.apiService.getLoan(id)
     .subscribe(data => {
       this.loan = data.loan
+      this.notes = this.loan.notes
+      this.notes.sort((a: any, b: any): any => b.id - a.id)
       this.loading = false
     })
   }
@@ -48,7 +51,6 @@ export class LoanDetailComponent implements OnInit {
     const loanId = loan.id
     this.apiService.deleteLoan(loanId)
     .subscribe(() => {
-      console.log("Loan deleted successfully")
       this.router.navigate(['']);
     })
   }
@@ -91,7 +93,6 @@ export class LoanDetailComponent implements OnInit {
   editLoan(loan: any) : void {
     this.apiService.editLoan(loan)
     .subscribe(data => {
-      console.log(data, "Loan edited")
       window.location.reload();
     })
   }

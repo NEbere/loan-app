@@ -44,7 +44,7 @@ router.get('/loans', async (req, res) => {
       } }
     })
   } else {
-    loans = await Loan.findAll({order: [['updatedAt', 'DESC']]})
+    loans = await Loan.findAll({order: [['createdAt', 'DESC']]})
   }
 
   res.status(200).send({ loans })
@@ -55,7 +55,7 @@ router.get('/loans', async (req, res) => {
 router.get('/loan/:id', async (req, res) => {
   const loanId = parseInt(req.params.id, 10)
   const loan = await Loan.findById(loanId, {
-    include: [ 
+    include: [
       { model: Note, as: 'notes' }
     ]
   })

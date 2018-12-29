@@ -11,7 +11,7 @@ import { APIUtilService } from '../../services/apiUtils';
   styleUrls: ['./loans.component.css']
 })
 export class LoansComponent implements OnInit {
-  currencySymbol = '€'
+  currencySymbol = '₡'
   faSearch = faSearch
   faBars = faBars
   username = "Alonso"
@@ -48,7 +48,6 @@ export class LoansComponent implements OnInit {
   }
 
   gotoLoanDetail(loan): void {
-    console.log(loan, 'Loan from gotoLoanDetail')
     this.router.navigate(['/loan', loan.id]);
   }
 

@@ -15,7 +15,7 @@ import { APIUtilService } from '../services/apiUtils';
 })
 
 export class AppComponent implements OnInit {
-  currencySymbol = '€'
+  currencySymbol = '₡'
   faSearch = faSearch
   faBars = faBars
   username = "Alonso"
@@ -68,7 +68,6 @@ export class AppComponent implements OnInit {
     this.loading = true
     this.apiService.getLoanEntries()
       .subscribe(data => {
-        console.log(data.loans, 'data --- client')
         this.loanEntries = data.loans
         this.loading = false
       })
@@ -77,7 +76,6 @@ export class AppComponent implements OnInit {
   createLoanEntry(loan: any):void {
     this.apiService.createLoan(loan)
     .subscribe(data => {
-      console.log(data, 'data --- client')
       window.location.reload();
     })
   }

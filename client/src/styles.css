@@ -183,83 +183,29 @@ input.capsule::placeholder {
     color: #3f65d2;
     font-weight: bold;
 }
-/* main nav */
 
-/* .mainContent{
-    padding-top: 5em;
+.add-note {
+    margin-left: 1em;
 }
 
-.welcomeMsg {
-    font-family: 'Roboto Mono', monospace;
+/* loan detail menu item */
+.loanMenuItem {
+    color: #a0a4bb;
+    font-size: .9em;
+    margin-right: 1em;
+    cursor: pointer;
+    padding: .5em;
+    padding-right: 0em;
 }
 
-.selectMsg {
-    font-family: 'Roboto', sans-serif;
-}
-span.appName{
-    color: rgba(198,6,6,1)
+.loanMenuItem:hover {
+    background: #e7eeff;
 }
 
-.product{
-    margin-top: 3em
+.loan-detail-link {
+    cursor: pointer;
 }
 
-.productPrice{
-    background: rgba(255,255,255,.05);
-    padding: 1em 2em;
-    margin: 1em;
-    min-height: 15em;
+.mainList {
+    color: #0062ff;
 }
-
-.form-control {
-    background: transparent;
-    border: 2px solid #ffffff;
-    color: #ffffff;
-    width: 100%;
-    padding: 15px 25px;
-    -moz-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-    height: 3em;
-    border-radius: 0 !important;
-}
-
-.form-control:focus {
-    outline: none !important;
-    background: transparent;
-    color: #ffffff;
-    box-shadow: none; 
-}
-
-select {
-    outline: none;
-    box-shadow:none !important;
-    border: 2px solid #ffffff !important;
-}
-
-p.exchange {
-    font-size: 1.7em;
-    font-weight: 100;
-    border-bottom: solid thin;
-    line-height: 2em;
-}
-
-p.price, p.high, p.low {
-    font-weight: 600;
-    font-size: 1.05em;
-    line-height: 1em;
-    font-family: 'Roboto', sans-serif;
-}
-
-p.price > span, p.high > span, p.low > span{
-    font-weight: 100;
-}
-
-p.high > span {
-    color: rgba(0,185,9,1);
-}
-
-p.low > span {
-    color: rgba(198,6,6,1);
-} */

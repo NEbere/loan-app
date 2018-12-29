@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faSearch, faBars, faInfoCircle, faCalendarAlt,
-  faLandmark, faPaperclip, faArchive, faTrash } from '@fortawesome/free-solid-svg-icons';
+  faLandmark, faPaperclip, faArchive, faTrash, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 // Services
 import { APIUtilService } from '../../services/apiUtils';
@@ -21,6 +21,7 @@ export class LoansComponent implements OnInit {
   faPaperclip = faPaperclip
   faArchive = faArchive
   faTrash = faTrash
+  faEllipsisV = faEllipsisV
   loanEntries = []
   loan:any = {}
 

@@ -44,7 +44,7 @@ router.get('/loans', async (req, res) => {
       } }
     })
   } else {
-    loans = await Loan.findAll()
+    loans = await Loan.findAll({order: [['updatedAt', 'DESC']]})
   }
 
   res.status(200).send({ loans })

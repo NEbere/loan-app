@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { faThList } from '@fortawesome/free-solid-svg-icons';
 
 // local iimports
 import { APIUtilService } from '../../services/apiUtils';
@@ -12,7 +13,7 @@ import { APIUtilService } from '../../services/apiUtils';
   styleUrls: ['./loan-detail.component.css']
 })
 export class LoanDetailComponent implements OnInit {
-
+  faThList = faThList
   currencySymbol = '€'
   loanEntries = []
   loan:any = {}
